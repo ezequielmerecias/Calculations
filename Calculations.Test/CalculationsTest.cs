@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 
 namespace Calculations.Test
 {
-    public class CalculationsFixture
+    public class CalculationsFixture : IDisposable
     {
         public Calculations Calc => new Calculations();
+
+        public void Dispose()
+        {
+            //clean
+            //Close connections
+            //Delete Data
+            //Etc
+        }
     }
     public class CalculationsTest : IClassFixture<CalculationsFixture>
     {
@@ -36,7 +44,7 @@ namespace Calculations.Test
         [Trait("Category", "Fibo")]
         public void FiboDoesNotInclude4()
         {
-            var calc = new Calculations();
+            var calc = _calculationsFixture.Calc;
             Assert.DoesNotContain(4, calc.FiboNumbers);
         }
 
@@ -56,5 +64,34 @@ namespace Calculations.Test
             var calc = new Calculations();
             Assert.Equal(expectedCollection, calc.FiboNumbers);
         }
+
+        //[Fact]
+        //public void IsOdd_GivenOddValue_ReturnsValue()
+        //{
+        //    var calc = new Calculations();
+        //    var result = calc.IsOdd(1);
+        //    Assert.False(result);
+        //}
+
+        //[Theory]
+        //[InlineData(1, true)]
+        //[InlineData(200, false)]
+        //public void IsOdd_TestOddAndEven(int value, bool expected)
+        //{
+        //    var cal = new Calculations();
+        //    var result = cal.IsOdd(value);  
+        //    Assert.True(expected);
+        //}
+
+        [Theory]
+        //[MemberData(nameof(TestDataShare.IsOddOrEvenExternalData), MemberType = typeof(TestDataShare))]
+        [IsOddOrEvenData]
+        public void IsOdd_TestOddAndEven(int value, bool expected)
+        {
+            var cal = new Calculations();
+            var result = cal.IsOdd(value);
+            Assert.True(expected);
+        }
+
     }
 }

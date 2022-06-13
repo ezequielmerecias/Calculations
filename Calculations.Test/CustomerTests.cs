@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculations.Test
 {
+    [Collection("Customer")]
     public class CustomerTests
     {
         //[Fact]
@@ -15,6 +16,12 @@ namespace Calculations.Test
         //    Assert.NotNull(customer.Name);
         //    Assert.False(string.IsNullOrEmpty(customer.Name));
         //}
+
+        private readonly CustomerFixture _customerFixture;
+        public CustomerTests(CustomerFixture customerFixture)
+        {
+            _customerFixture = customerFixture; 
+        }
 
         [Fact]
         public void GetOrdersByNameNotNull()
@@ -27,7 +34,7 @@ namespace Calculations.Test
         [Fact]
         public void CheckLegiForDiscount()
         {
-            var customer = new Customer();
+            var customer = _customerFixture.Cust;
             Assert.InRange(customer.Age, 25, 40);
         }
 
