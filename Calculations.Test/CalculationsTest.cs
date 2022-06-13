@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace Calculations.Test
 {
-    public class CalculationsTest
+    public class CalculationsFixture
     {
+        public Calculations Calc => new Calculations();
+    }
+    public class CalculationsTest : IClassFixture<CalculationsFixture>
+    {
+        private readonly CalculationsFixture _calculationsFixture;
+        public CalculationsTest(CalculationsFixture calculationsFixture)
+        {
+            _calculationsFixture = calculationsFixture;
+        }
+
         [Fact]
         public void FiboDoesNotIncludeZero()
         {
@@ -23,6 +33,7 @@ namespace Calculations.Test
         }
 
         [Fact]
+        [Trait("Category", "Fibo")]
         public void FiboDoesNotInclude4()
         {
             var calc = new Calculations();
@@ -30,6 +41,15 @@ namespace Calculations.Test
         }
 
         [Fact]
+        [Trait("Category","Fibo")]
+        public void CheckFiboIsNotZero()
+        {
+            var calculator = new Calculations();
+            Assert.DoesNotContain(0, calculator.FiboNumbers);
+        }
+
+        [Fact]
+        [Trait("Category", "Fibo")]
         public void CheckCollection()
         {
             var expectedCollection = new List<int> { 1, 1, 2, 3, 5, 8, 13 };

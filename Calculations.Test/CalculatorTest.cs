@@ -1,7 +1,10 @@
 namespace Calculations.Test
 {
+    
+
     public class CalculatorTest
     {
+
         [Fact]
         public void Add_GivenTwoIntValues_ReturnsInt()
         {
